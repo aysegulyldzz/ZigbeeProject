@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zigbee Radio ML Service - Dashboard</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-signal"></i> Zigbee Radio ML Service</h1>
+                <p class="subtitle">Machine Learning API Dashboard</p>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('distance')">
+                <i class="fas fa-ruler"></i> Distance Estimation
+            </button>
+            <button class="tab-btn" onclick="showTab('human')">
+                <i class="fas fa-user"></i> Human Detection
+            </button>
+            <button class="tab-btn" onclick="showTab('location')">
+                <i class="fas fa-map-marker-alt"></i> Location Classification
+            </button>
+            <button class="tab-btn" onclick="showTab('quality')">
+                <i class="fas fa-star"></i> Signal Quality
+            </button>
+            <button class="tab-btn" onclick="showTab('anomaly')">
+                <i class="fas fa-exclamation-triangle"></i> Anomaly Detection
+            </button>
+            <button class="tab-btn" onclick="showTab('prediction')">
+                <i class="fas fa-chart-line"></i> Signal Prediction
+            </button>
+        </div>
+
+        <!-- Tab Contents -->
+        <div class="tab-content active" id="distance-tab">
+            <div class="card">
+                <h2><i class="fas fa-ruler"></i> Distance Estimation</h2>
+                <p class="description">Estimates distance from RSSI, LQI, and THROUGHPUT values.</p>
+                
+                <form id="distance-form" class="form">
+                    <div class="form-group">
+                        <label for="distance-rssi">RSSI (dBm)</label>
+                        <input type="number" id="distance-rssi" name="rssi" step="0.1" value="-75.5" required>
+                        <small>Example: -75.5 (typically between -50 and -95)</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="distance-lqi">LQI</label>
+                        <input type="number" id="distance-lqi" name="lqi" step="0.1" value="105.2" required>
+                        <small>Example: 105.2 (between 0 and 107)</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="distance-throughput">THROUGHPUT (bytes/s)</label>
+                        <input type="number" id="distance-throughput" name="throughput" step="0.1" value="20000" required>
+                        <small>Example: 20000 (typically between 0 and 22000)</small>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-calculator"></i> Predict
+                    </button>
+                </form>
+                
+                <div id="distance-result" class="result hidden"></div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="human-tab">
+            <div class="card">
+                <h2><i class="fas fa-user"></i> Human Presence Detection</h2>
+                <p class="description">Detects human presence from RSSI, LQI, and THROUGHPUT values.</p>
+                
+                <form id="human-form" class="form">
+                    <div class="form-group">
+                        <label for="human-rssi">RSSI (dBm)</label>
+                        <input type="number" id="human-rssi" name="rssi" step="0.1" value="-82.3" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="human-lqi">LQI</label>
+                        <input type="number" id="human-lqi" name="lqi" step="0.1" value="98.5" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="human-throughput">THROUGHPUT (bytes/s)</label>
+                        <input type="number" id="human-throughput" name="throughput" step="0.1" value="15000" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="human-timestamp">Timestamp (optional)</label>
+                        <input type="number" id="human-timestamp" name="timestamp" step="0.1" value="45">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Detect
+                    </button>
+                </form>
+                
+                <div id="human-result" class="result hidden"></div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="location-tab">
+            <div class="card">
+                <h2><i class="fas fa-map-marker-alt"></i> Device Location Classification</h2>
+                <p class="description">Classifies device location (necklace vs pocket).</p>
+                
+                <form id="location-form" class="form">
+                    <div class="form-group">
+                        <label for="location-rssi">RSSI (dBm)</label>
+                        <input type="number" id="location-rssi" name="rssi" step="0.1" value="-78.2" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="location-lqi">LQI</label>
+                        <input type="number" id="location-lqi" name="lqi" step="0.1" value="103.5" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="location-throughput">THROUGHPUT (bytes/s)</label>
+                        <input type="number" id="location-throughput" name="throughput" step="0.1" value="19500" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="location-rssi-stddev">RSSI Standard Deviation (optional)</label>
+                        <input type="number" id="location-rssi-stddev" name="rssi_stddev" step="0.1" value="1.2">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-tag"></i> Classify
+                    </button>
+                </form>
+                
+                <div id="location-result" class="result hidden"></div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="quality-tab">
+            <div class="card">
+                <h2><i class="fas fa-star"></i> Signal Quality Scoring</h2>
+                <p class="description">Generates overall signal quality score from RSSI, LQI, and THROUGHPUT values.</p>
+                
+                <form id="quality-form" class="form">
+                    <div class="form-group">
+                        <label for="quality-rssi">RSSI (dBm)</label>
+                        <input type="number" id="quality-rssi" name="rssi" step="0.1" value="-75.5" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="quality-lqi">LQI</label>
+                        <input type="number" id="quality-lqi" name="lqi" step="0.1" value="105.2" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="quality-throughput">THROUGHPUT (bytes/s)</label>
+                        <input type="number" id="quality-throughput" name="throughput" step="0.1" value="20000" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-chart-bar"></i> Score
+                    </button>
+                </form>
+                
+                <div id="quality-result" class="result hidden"></div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="anomaly-tab">
+            <div class="card">
+                <h2><i class="fas fa-exclamation-triangle"></i> Anomaly Detection</h2>
+                <p class="description">Detects abnormal signal behaviors.</p>
+                
+                <form id="anomaly-form" class="form">
+                    <div class="form-group">
+                        <label for="anomaly-rssi">RSSI (dBm)</label>
+                        <input type="number" id="anomaly-rssi" name="rssi" step="0.1" value="-95.5" required>
+                        <small>Abnormal example: -95.5 (very low)</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="anomaly-lqi">LQI</label>
+                        <input type="number" id="anomaly-lqi" name="lqi" step="0.1" value="50.2" required>
+                        <small>Abnormal example: 50.2 (very low)</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="anomaly-throughput">THROUGHPUT (bytes/s)</label>
+                        <input type="number" id="anomaly-throughput" name="throughput" step="0.1" value="500" required>
+                        <small>Abnormal example: 500 (very low)</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="anomaly-timestamp">Timestamp (optional)</label>
+                        <input type="number" id="anomaly-timestamp" name="timestamp" step="0.1" value="30">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-warning">
+                        <i class="fas fa-shield-alt"></i> Check
+                    </button>
+                </form>
+                
+                <div id="anomaly-result" class="result hidden"></div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="prediction-tab">
+            <div class="card">
+                <h2><i class="fas fa-chart-line"></i> Signal Quality Prediction</h2>
+                <p class="description">Predicts future signal quality from historical signal data.</p>
+                
+                <form id="prediction-form" class="form">
+                    <div class="form-group">
+                        <label>Historical Data (minimum 2 data points)</label>
+                        <div id="history-inputs">
+                            <div class="history-item">
+                                <input type="number" placeholder="Timestamp" step="0.1" value="0" class="history-timestamp">
+                                <input type="number" placeholder="RSSI" step="0.1" value="-75" class="history-rssi">
+                                <input type="number" placeholder="LQI" step="0.1" value="105" class="history-lqi">
+                                <input type="number" placeholder="THROUGHPUT" step="0.1" value="20000" class="history-throughput">
+                            </div>
+                            <div class="history-item">
+                                <input type="number" placeholder="Timestamp" step="0.1" value="15" class="history-timestamp">
+                                <input type="number" placeholder="RSSI" step="0.1" value="-78" class="history-rssi">
+                                <input type="number" placeholder="LQI" step="0.1" value="103" class="history-lqi">
+                                <input type="number" placeholder="THROUGHPUT" step="0.1" value="19500" class="history-throughput">
+                            </div>
+                            <div class="history-item">
+                                <input type="number" placeholder="Timestamp" step="0.1" value="30" class="history-timestamp">
+                                <input type="number" placeholder="RSSI" step="0.1" value="-80" class="history-rssi">
+                                <input type="number" placeholder="LQI" step="0.1" value="101" class="history-lqi">
+                                <input type="number" placeholder="THROUGHPUT" step="0.1" value="19000" class="history-throughput">
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="addHistoryItem()">
+                            <i class="fas fa-plus"></i> Add Data
+                        </button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="future-steps">Future Steps</label>
+                        <input type="number" id="future-steps" name="future_steps" value="3" min="1" max="10" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-crystal-ball"></i> Predict
+                    </button>
+                </form>
+                
+                <div id="prediction-result" class="result hidden"></div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Zigbee Radio ML Service v1.0.0 | <a href="/docs" target="_blank">API Documentation</a></p>
+        </footer>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
+

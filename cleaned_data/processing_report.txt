@@ -1,0 +1,26 @@
+============================================================
+VERİ İŞLEME RAPORU
+============================================================
+
+Başlangıç Zamanı: 2025-12-01T00:32:04.887769
+Bitiş Zamanı: 2025-12-01T00:32:05.403873
+Süre: 0.52 saniye
+
+Toplam Dosya Sayısı: 47
+İşlenen Dosya Sayısı: 47
+Başarısız Dosya Sayısı: 0
+
+Kategori İstatistikleri:
+------------------------------------------------------------
+
+radio_measurement_combined:
+  Dosya Sayısı: 14
+  İşlenen Satır: 271
+  Temizlenen Satır: 264
+  Atılan Satır: 142
+
+radio_measurement_separate:
+  Dosya Sayısı: 33
+  İşlenen Satır: 1177
+  Temizlenen Satır: 1167
+  Atılan Satır: 186

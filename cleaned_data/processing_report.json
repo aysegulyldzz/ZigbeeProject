@@ -1,0 +1,23 @@
+{
+  "start_time": "2025-12-01T00:32:04.887769",
+  "total_files": 47,
+  "processed_files": 47,
+  "failed_files": 0,
+  "category_stats": {
+    "radio_measurement_combined": {
+      "status": 14,
+      "rows_processed": 271,
+      "rows_cleaned": 264,
+      "rows_dropped": 142
+    },
+    "radio_measurement_separate": {
+      "status": 33,
+      "rows_processed": 1177,
+      "rows_cleaned": 1167,
+      "rows_dropped": 186
+    }
+  },
+  "errors": [],
+  "end_time": "2025-12-01T00:32:05.403873",
+  "duration_seconds": 0.516104
+}
