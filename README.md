@@ -19,6 +19,8 @@ A comprehensive machine learning system for analyzing Zigbee radio measurement d
 
 ## Project Overview
 
+<img width="1894" height="863" alt="Scenarios" src="https://github.com/user-attachments/assets/8829d8f6-27b6-4ca3-a6a8-a3dd0d3ca879" />
+
 This project processes Zigbee radio measurement data from the CRAWDAD dataset (dartmouth/zigbeeradio) and provides machine learning models for:
 
 - **Distance Estimation**: Predicts distance from RSSI, LQI, and THROUGHPUT values
